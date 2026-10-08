@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+group = 'dev.franco'
+version = '1.0.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+repositories {
+    maven { url 'https://maven.maxhenkel.de/repository/public' }
+}
+
+dependencies {
+    compileOnly 'de.maxhenkel.voicechat:voicechat-api:2.6.0'
+}
+
+jar {
+    archiveFileName = 'SVCRejoin-Fabric-1.0.0.jar'
+}

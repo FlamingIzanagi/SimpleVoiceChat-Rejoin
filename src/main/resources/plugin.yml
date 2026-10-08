@@ -1,0 +1,41 @@
+name: SVCRejoin
+version: '${project.version}'
+main: dev.franco.svcrejoin.SvcRejoinPlugin
+api-version: '1.21'
+description: '${project.description}'
+author: Franco
+depend: [voicechat]
+
+# Los subcomandos se enganchan al comando /voicechat que ya registra Simple Voice Chat
+# (ver VoicechatSubcommands: envuelve su executor en la build Bukkit o se fusiona en su nodo
+# Brigadier en la build Paper). NO se declaran en la sección "commands:" a propósito: un comando
+# "voicechat" registrado vía plugin.yml competiría con el de Simple Voice Chat y podría ocultarlo.
+#
+#   /voicechat rejoin [jugador]      -> reinicia la conexión de voz
+#   /voicechat disconnect [jugador]  -> corta la conexión de voz
+#
+# /svcrejoin reload es un comando propio (sin conflicto) y se registra con Brigadier (AdminCommand).
+
+permissions:
+  voicechat.admin.reconnect:
+    description: Permite usar /voicechat rejoin y /voicechat disconnect sobre uno mismo.
+    default: op
+  voicechat.admin.reconnect.others:
+    description: Permite usar /voicechat rejoin <jugador> y /voicechat disconnect <jugador>.
+    default: op
+    children:
+      voicechat.admin.reconnect: true
+  voicechat.admin.reconnect.bypasscooldown:
+    description: Ignora el cooldown de /voicechat rejoin.
+    default: op
+  voicechat.admin.reconnect.reload:
+    description: Permite usar /svcrejoin reload.
+    default: op
+  voicechat.admin.reconnect.*:
+    description: Todos los permisos de SVCRejoin.
+    default: op
+    children:
+      voicechat.admin.reconnect: true
+      voicechat.admin.reconnect.others: true
+      voicechat.admin.reconnect.bypasscooldown: true
+      voicechat.admin.reconnect.reload: true

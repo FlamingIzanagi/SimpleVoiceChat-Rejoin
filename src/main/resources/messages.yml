@@ -1,0 +1,71 @@
+# =====================================================================
+#  SVCRejoin - Mensajes
+#
+#  Formatos admitidos (se pueden mezclar en un mismo mensaje):
+#    - Códigos clásicos:   &a verde, &c rojo, &l negrita, &o cursiva, &r reset...
+#    - Hex:                &#55FFFF   o   &x&5&5&F&F&F&F   o   <#55FFFF>
+#    - MiniMessage:        <green>, <gradient:#00ffff:#0077ff>, <click:...>, <hover:...>
+#                          https://docs.advntr.dev/minimessage/format
+#
+#  Placeholders según el mensaje: <player>, <seconds>, <attempt>, <max>, <position>, <total>, <action>, <tip>
+#  Deja cualquier mensaje en "" para que NO se envíe (no se usa el texto por defecto).
+#  Para los consejos: troubleshooting-tips: [] o tip-format: "" los oculta todos.
+#  Aplica los cambios con /svcrejoin reload.
+# =====================================================================
+
+# Se antepone a todos los mensajes (excepto a cada línea de consejo). "" para quitarlo.
+prefix: "&8[&bVoiceChat&8] "
+
+# --- Generales ---
+console-needs-target: "&cDesde la consola debes indicar un jugador: &f/voicechat <action> <jugador>"
+no-permission: "&cNo tienes permiso para usar este comando sobre otros jugadores."
+player-not-found: "&cEl jugador &f<player> &cno está conectado."
+voicechat-unavailable: "&cEl servidor de voz no está en funcionamiento ahora mismo."
+not-compatible: "&c<player> no tiene Simple Voice Chat instalado o usa una versión incompatible."
+cooldown: "&cEspera &f<seconds>s &cantes de volver a reconectar."
+
+# --- /voicechat rejoin ---
+rejoin-already-pending: "&eYa hay una reconexión en curso para &f<player>&e."
+rejoin-started: "&7Reiniciando tu conexión de voz..."
+rejoin-started-other: "&7Reiniciando la conexión de voz de &f<player>&7..."
+rejoin-started-by-admin: "&7Un administrador está reiniciando tu conexión de voz..."
+rejoin-success: "&a¡Conectado al chat de voz!"
+rejoin-success-other: "&a<player> se ha reconectado al chat de voz."
+rejoin-timeout: "&cNo se pudo conectar al chat de voz tras <seconds>s."
+rejoin-timeout-other: "&c<player> no logró conectar al chat de voz tras <seconds>s."
+rejoin-error: "&cOcurrió un error interno al reconectar. Revisa la consola."
+auto-rejoin: "&7Tu chat de voz no está conectado, reintentando automáticamente &8(<attempt>/<max>)&7..."
+# Cola (config.yml -> rejoin.queue). <position> es el puesto de este jugador, <total> cuántos se desconectaron.
+rejoin-queued: "&eTe desconectaste del chat de voz por un reinicio. Estás en el puesto &f<position> &ede &f<total>&e. Espera tu turno; se reconectará sola."
+rejoin-queue-turn: "&7Llegó tu turno &8(<position>/<total>)&7. Reconectando tu chat de voz &8(<attempt>/<max>)&7..."
+
+# --- /voicechat disconnect ---
+not-connected: "&e<player> no está conectado al chat de voz."
+disconnect-success: "&eTe has desconectado del chat de voz. <click:run_command:'/voicechat rejoin'><hover:show_text:'&7Click para reconectar'>&b[Reconectar]</hover></click>"
+disconnect-success-other: "&e<player> ha sido desconectado del chat de voz."
+disconnect-by-admin: "&eUn administrador te ha desconectado del chat de voz."
+disconnect-error: "&cOcurrió un error interno al desconectar. Revisa la consola."
+
+# --- Líneas añadidas a /voicechat y /voicechat help (sin prefix, mismo estilo que Simple Voice Chat) ---
+# <args> se reemplaza por help-target-argument si el jugador puede usarlo sobre otros, o por nada.
+help-rejoin: "/voicechat [rejoin]<args>"
+help-disconnect: "/voicechat [disconnect]<args>"
+help-target-argument: " [<jugador>]"
+
+# --- /svcrejoin ---
+admin-usage: "&7Uso: &f/svcrejoin reload"
+reload-success: "&aConfiguración y mensajes recargados."
+reload-error: "&cNo se pudo recargar: &f<file> &ctiene un error de formato YAML. Revisa la consola."
+
+# --- Avisos automáticos (config.yml -> hints) ---
+hint-join: "&eTu chat de voz no se conectó. <click:run_command:'/voicechat rejoin'><hover:show_text:'&7Ejecuta /voicechat rejoin'>&b[Click para reconectar]</hover></click>"
+hint-connection-lost: "&ePerdiste la conexión del chat de voz. <click:run_command:'/voicechat rejoin'><hover:show_text:'&7Ejecuta /voicechat rejoin'>&b[Click para reconectar]</hover></click>"
+
+# --- Consejos tras un fallo de reconexión (config.yml -> troubleshooting.enabled) ---
+tips-header: "&6Posibles soluciones:"
+# Formato de cada línea; <tip> es el texto del consejo.
+tip-format: "&8 • &7<tip>"
+troubleshooting-tips:
+  - "Pulsa &fV &7para abrir el menú del chat de voz y revisar su estado."
+  - "Verifica que tu versión de Simple Voice Chat coincide con la del servidor."
+  - "Tu firewall o antivirus podría bloquear el tráfico &fUDP &7de Minecraft."

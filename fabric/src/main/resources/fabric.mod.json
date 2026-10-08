@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "svcrejoin",
+  "version": "1.0.0",
+  "name": "SVCRejoin",
+  "description": "Reutiliza el puerto UDP local de Simple Voice Chat para poder reconectar detrás de Docker.",
+  "authors": [
+    "Franco"
+  ],
+  "license": "All Rights Reserved",
+  "environment": "client",
+  "entrypoints": {
+    "voicechat": [
+      "dev.franco.svcrejoin.fabric.RejoinVoicechatPlugin"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "1.21.11",
+    "java": ">=21",
+    "voicechat": "*"
+  }
+}

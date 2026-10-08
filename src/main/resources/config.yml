@@ -1,0 +1,64 @@
+# =====================================================================
+#  SVCRejoin - Configuración
+#  Los mensajes (y el prefix) se editan en messages.yml.
+# =====================================================================
+
+rejoin:
+  # Segundos que un jugador debe esperar entre dos /voicechat rejoin sobre el mismo objetivo.
+  # Evita que alguien sature el servidor de voz reconectando en bucle.
+  # Ignorado con el permiso voicechat.admin.reconnect.bypasscooldown. 0 = sin cooldown.
+  cooldown-seconds: 10
+
+  # Milisegundos entre cortar la sesión vieja y enviar la clave nueva al cliente.
+  # El cliente cierra su socket al recibir esa clave, igual que cuando Simple Voice Chat
+  # reconecta por timeout. 0 envía la clave enseguida.
+  reconnect-delay-ms: 250
+
+  # Segundos máximos a esperar a que el cliente confirme la conexión UDP.
+  # Si se supera, se muestra el mensaje de fallo y los consejos de messages.yml.
+  timeout-seconds: 15
+
+  # Cola para cuando mucha gente pierde la voz a la vez (un reinicio del voice chat).
+  # enabled: false reconecta a todos enseguida, sin tope.
+  # max-concurrent: cuántas reconexiones automáticas pueden ir a la vez; el resto espera
+  # y recibe el mensaje rejoin-queued de messages.yml. El comando manual no entra en la cola.
+  queue:
+    enabled: true
+    max-concurrent: 5
+
+  # Si es true, solo se intenta reconectar a jugadores con una versión compatible del mod instalada.
+  # Recomendado: sin el mod el cliente nunca podrá responder.
+  require-compatible-client: true
+
+  # Avisar al jugador afectado cuando un admin reinicia su conexión.
+  notify-target: true
+
+disconnect:
+  # Avisar al jugador afectado cuando un admin lo desconecta del chat de voz.
+  notify-target: true
+
+# Reconexión automática tras perder la voz. No actúa al entrar: el ingreso normal ya conecta.
+# No requiere permisos. Si rejoin.queue.enabled es true, los intentos simultáneos respetan el tope.
+auto-rejoin:
+  enabled: true
+  # Segundos tras registrar el canal de voz. Si sigue sin conectar, se muestra hints.on-join.
+  # Solo jugadores con Simple Voice Chat. No reconecta solo en este caso.
+  join-check-delay-seconds: 20
+  # Segundos tras perder la conexión antes de volver a comprobar (Simple Voice Chat
+  # ya intenta reconectar por su cuenta; esto actúa solo si su intento falla).
+  lost-check-delay-seconds: 15
+  # Intentos automáticos máximos por sesión de juego. Se reinicia al conectar con éxito.
+  max-attempts: 2
+
+# Avisos con botón clicable "[Reconectar]". Solo se envían a jugadores con permiso
+# voicechat.admin.reconnect, y solo si la reconexión automática está apagada o agotada.
+hints:
+  on-join: true
+  on-connection-lost: true
+
+# Mostrar los consejos de messages.yml (troubleshooting-tips) cuando una reconexión falla.
+troubleshooting:
+  enabled: true
+
+# Muestra en consola cada paso de la reconexión (útil para depurar).
+debug: false

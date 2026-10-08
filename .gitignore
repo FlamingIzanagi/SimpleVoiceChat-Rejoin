@@ -1,0 +1,6 @@
+target/
+.idea/
+*.iml
+.vscode/
+fabric/.gradle/
+fabric/build/
